@@ -13,7 +13,7 @@
 Hoping to note out some main study points that I realize I don't know from the practice tests that are much harder than the course content.
 Goal is a study guide for things I didn't learn enough of to go back and read more on later. 
 
-Noted: 2.1.1-3
+Noted: 2.1.
 Score: 2.1.1: 41
 
 # Domain 1: Monitoring, Logging, Remediation
@@ -81,3 +81,28 @@ Score: 2.1.1: 41
   * monitor against service limints
   * monitor for best practices
 * Inspector - monitor for security state 
+
+# Domain 4: Security and Compliance
+* IAM Policies
+	* identity based apply to user, group role
+	* resource based apply to things, buckets, keys, etc.
+	* to access things cross-account: need identify based on user, and resource based on object
+* CloudFront
+	* Use custom origin to require it's use for s3
+* MFA - hardware can't be reused
+
+# Domain 5: Networking and Content Delivery
+* Subnets
+	* public and private talk by default
+* CloudFront
+	* Errors if you move buckets from one region to another, have to update the CF distribution
+* VPC Endpoint - privately connect to supported AWS services and VPC endpoint services
+* S3
+	* Lifecycle Policy - transition actions to move between types and expiration actions to delete things
+
+# Domain 6: Cost and Performance Optimization
+* Snowball
+	* Can't go directly to Glacier
+* EC2
+	* Enhanced Networking - many packets per second
+	* Cluster placement group - fast inter-ec2 networking
