@@ -11,17 +11,24 @@
   2. https://digitalu.udemy.com/course/practice-exams-aws-certified-sysops-administrator-associate
   3. Main course has a practice test
   4. Maybe (it's getting expired soon): https://digitalu.udemy.com/course/aws-sysops-admin-associate-3-full-practice-tests/
+* Study guides:
+	* https://digitalcloud.training/aws-cheat-sheets/#Services?megamenu
+		* This has super helpful overviews for each service
 
 # Notes
 Hoping to note out some main study points that I realize I don't know from the practice tests that are much harder than the course content.
 Goal is a study guide for things I didn't learn enough of to go back and read more on later. 
 
-Noted: 2.1-3  
+Noted: 
+* 1.1,5
+* 2.1-3  
 
 Score:  
 * 2.1: 41, 4 Jan
 * 2.2: 60, 5 Jan
 * 2.3: 63, 5 Jan
+* 1.1: 81, 6 Jan (looks like same questions from the course, think I remembered some)
+* 1.5: 60, 7 Jan
 
 
 
@@ -30,10 +37,18 @@ Score:
   * may terminate instances that are stopped, pause if you are updating an instance
   * launch process can get suspended 
   * Can terminate instances with DisableApiTermination, need instance protection or to suspend ReplaceUnhealthy
+  * Launch configuration cannot be updated, only replaced
+
+* Artifact
+	* AWS Artifact provides information about compliance of the AWS platform
+	* provides on-demand downloads of AWS security and compliance documents
 
 * Athena 
-	* Analyze data where it's at
+	* Analyze data where it's at (in S3)
 	* serverless
+
+* Aurora
+	* managed database
 
 * Backup
 	* Centralized backup management for everything across accounts
@@ -51,6 +66,7 @@ Score:
 
 * CloudFront
 	* Configure log files to contain every request info
+	* TotalErrorRate to see everything wrong 
 	* Remove quickly - invalidate the file then serve a new file
 	* caches for 24 hrs
 	* Use custom origin or origin access identity to require it's use for s3
@@ -59,9 +75,15 @@ Score:
 		* Signed URLs created with CF Key Pairs
 	* If it goes to a website s3, can't be https to bucket
 
+* CloudTrail
+	* Track API activities made by console, CLI, CF, etc. 
+	* Can track federated users 
+
 * CloudWatch
   * Can have two config files - different file names
-  * Events - do things on a schedule
+  * Events
+	  * Used for state changes
+	  * do things on a schedule
   * Synthetics - Creates canaries - scripts that run on a schedule to monitor endpoints and APIs
   * ServiceLens - enhances observaibility by integrating traces, metrics, logs, alarms
   * Metrics:
@@ -73,6 +95,8 @@ Score:
     * CPUUtilization
     * Custom: StatsD for L/W, CollectD for L
     * Custom metrics via CLI or API
+    * Alarm
+	    * automatic actions on EC2
 	* Agent
 	    * CloudWatchAgentServerRole - IAM role for EC2 instances
 	    * Custom metrics via CLI or API
@@ -82,9 +106,16 @@ Score:
 			* e.x.: snapshot EBS
 		* Synthetics - Creates canaries - scripts that run on a schedule to monitor endpoints and APIs
 		* ServiceLens - enhances observaibility by integrating traces, metrics, logs, alarms
+
 * Config
 	* keeps track of configuration and relationships to other resources and evaluates for compliance
 	* Auto Remediation to fix things that aren't right
+	* discover existing AWS resources, export a complete inventory of your AWS resources with all configuration details, and determine how a resource was configured at any point in time.
+
+* EBS
+	* Consistency check for impaired storage
+	* Expand with elastic volumes
+	* Increasing size gives more I/O credits for performance
 
 * EC2
   * DisableApiTermination: stops termination from API, CLI, UI
@@ -95,6 +126,8 @@ Score:
   * Enhanced Networking - many packets per second
   * Cluster placement group - fast inter-ec2 networking
   * Dedicated instances are normal instances but hardware separated per customer, dedicated host gives full host
+  * Instance Profile - gives IAM role information to instance
+  * EC2Rescue - help resolve windows OS level issues 
 
 * ELB
   * 503 if no registered targets
@@ -124,32 +157,59 @@ Score:
 	  * resource based apply to things, buckets, keys, etc.
 	  * to access things cross-account: need identify based on user, and resource based on object
 	  * Any explicit deny overrides any allow
+	  * Password policies to force changes
+	  * Access keys can't be expired via policy 
 
 * Inspector
+	* security assessment service
 	* check security state 
 
 * Lambda
   * Not self-invoking
 
+* Trusted Advisor
+  * monitor against service limints
+  * monitor for best practices
+  * provides you real time guidance to help you provision your resources following AWS best practices
+  * reduce cost, increase performance, and improve security by optimizing your AWS environment.
+
 * S3
 	* Delete marker - versioned object marked deleted, not actually gone
 	* Replication Time Control - notice when replication fails
 	* Versions can have different retention periods
+	* Storage options:
+		* have to be in for 30 days before going to IA
+
+* Secrets Manager
+	* Supports automatic rotation
 
 * Site to site
 	* direct connect - physical
 	* The rest - can be software VPNs
 
+* Shield
+	* DDoS protection
+
 * Systems Manager
 	* Collect metadata about instances 
 	* AWSSupport-TroubleshootS3PublicRead automation document to help fix public S3 issues
+	* Automation document to update automate common and repetitive IT operations and management tasks across AWS resources
 
 * RDS
 	* parameter groups to enforce SSL
 	* Multi-AZ is HA
 	* Enhanced monitoring: 1.Free Memory 2.Active Memory 3.Swap Free 4.Processes Running 5.File System Used
+		* OS level metrics not part of standard cloudwatch 
 	* Read replicas are asynchronous on change to dB, Multi-AZ is synchronous
 	* Upgrade - snapshot existing and create new then upgrade and test 
+	* Only ever one writable node
+	* 
+
+* Route 53
+	* Alias - special record to map an apex to an ELB DNS (only one since you can't CNAME the apex)
+
+* AWS Redshift
+	* Data warehouse in PQL to analyze data you put into it
 
 * Accidental deleting
   * AMI - can't be recovered, only remade
@@ -169,10 +229,6 @@ Score:
 * X-Ray
 	* helps trace app workflows, integrated with S3, ELB, Lambda, APIs. Not ALB. 
 
-* Trusted Advisor
-  * monitor against service limints
-  * monitor for best practices
-
-Thoughts:
-* I don't know what I'm doing
-
+* WAF
+	* Only in front of CF, ALB, API Gateway
+	* Manage rate limits 
