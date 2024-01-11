@@ -1,7 +1,6 @@
 # Links
-
-* Courses:
-	* https://digitalu.udemy.com/course/aws-certified-sysops-administrator-associate-training/
+* Courses
+	* https://digitalu.udemy.com/cog/
 	    * The main course and the one the code came from. 
 	    * From what I can tell of practice tests so far, the course is probably more tailored to the exam labs that don't exist anymore, and not tailored enough to detailing specifics about the nuance of some of the services. 
 	* https://digitalu.udemy.com/course/ultimate-aws-certified-sysops-administrator-associate/learn/lecture/27512496#overview
@@ -45,6 +44,7 @@ Goal is a study guide for things I didn't learn enough of to go back and read mo
 | 6 | 90 | 10 | 20 |  |
 | 7 | 60 | 10 | 40 | wrong on multiple choice gives you negative points wtf? |
 | 8 | 778 | 10 | 65 |  |
+| Exam | 821 | 11 | 65 | PASSED! |
 
 * ASG
   * Scale-in (protection) - making it smaller (but doesn't delete any)
