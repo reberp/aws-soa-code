@@ -11,26 +11,40 @@
   2. https://digitalu.udemy.com/course/practice-exams-aws-certified-sysops-administrator-associate
   3. Main course has a practice test
   4. Maybe (it's getting expired soon): https://digitalu.udemy.com/course/aws-sysops-admin-associate-3-full-practice-tests/
+  5. https://d1.awsstatic.com/training-and-certification/docs-sysops-associate/AWS-Certified-SysOps-Administrator-Associate_Sample-Questions.pdf
+  6. Practice question set: https://explore.skillbuilder.aws/learn/course/external/view/elearning/12485/aws-certified-sysops-administrator-associate-practice-question-set-soa-c02-english?syops=sec&sec=prep
+  7. https://explore.skillbuilder.aws/learn/course/9457/play/32355/benchmark-assessment
+  8. skillbuilder test (course test and separate test course are same?) https://explore.skillbuilder.aws/learn/mycourses
 * Study guides:
-	* https://digitalcloud.training/aws-cheat-sheets/#Services?megamenu
+	* https://digitalcloud.training/category/aws-cheat-sheets/aws-sysops-administrator-associate/
 		* This has super helpful overviews for each service
+	* Exam scenarios from digitalcloud.training: https://digitalcloud.training/aws-sysops-administrator-exam-scenarios/
 
 # Notes
 Hoping to note out some main study points that I realize I don't know from the practice tests that are much harder than the course content.
 Goal is a study guide for things I didn't learn enough of to go back and read more on later. 
 
-Noted: 
-* 1.1,5
-* 2.1-3  
-
-Score:  
-* 2.1: 41, 4 Jan
-* 2.2: 60, 5 Jan
-* 2.3: 63, 5 Jan
-* 1.1: 81, 6 Jan (looks like same questions from the course, think I remembered some)
-* 1.5: 60, 7 Jan
-
-
+| Item | Score | Date | \#Q | Note |
+| ---- | ---- | ---- | ---- | ---- |
+| C.1 | - | - | 65 | Forgot to note |
+| C.2 | - | - | 65 |  |
+| C.3 | - | - | 65 |  |
+| 2.1 | 41 | 4 | 65 |  |
+| 2.2 | 60 | 5 | 65 |  |
+| 2.3 | 63 | 5 | 65 |  |
+| 1.1 | 81 | 6 | 65 | remembered some for sure |
+| 1.5 | 60 | 7 | 65 |  |
+| 2.4 | 43 | 7 | 65 |  |
+| 5 | 55 | 7 | 8 |  |
+| 1.2 | 80 | 8 | 65 | side-side > all at once |
+| 1.4 | 72 | 8 | 65 |  |
+| 6 | 65 | 8 | 20 |  |
+| 1.5 | 89 | 9 | 65 | no more retaking tests |
+| 1.3 | 72 | 9 | 65 |  |
+| 5 | 90 | 10 | 8 |  |
+| 6 | 90 | 10 | 20 |  |
+| 7 | 60 | 10 | 40 | wrong on multiple choice gives you negative points wtf? |
+| 8 | 778 | 10 | 65 |  |
 
 * ASG
   * Scale-in (protection) - making it smaller (but doesn't delete any)
@@ -38,6 +52,9 @@ Score:
   * launch process can get suspended 
   * Can terminate instances with DisableApiTermination, need instance protection or to suspend ReplaceUnhealthy
   * Launch configuration cannot be updated, only replaced
+  * Need a special role to access CMKs
+  * Warm pool for things that take long to start. Not sure the cost point? 
+  * 
 
 * Artifact
 	* AWS Artifact provides information about compliance of the AWS platform
@@ -47,11 +64,15 @@ Score:
 	* Analyze data where it's at (in S3)
 	* serverless
 
+* AWS Redshift
+	* Data warehouse in PQL to analyze data you put into it
+
 * Aurora
 	* managed database
 
 * Backup
 	* Centralized backup management for everything across accounts
+	* Use this if not just EBS instances (which is DLM)
 
 * Beanstalk
   * Default scaling is based on network traffic (high or low)
@@ -63,6 +84,10 @@ Score:
   * Stack set - act across multiple accounts and regions
   * Resource Import - bring in things you already have
   * Export to send to another stack, ImportValue to bring in
+  * UPDATE_ROLLBACK_FAILED can be corrected with continue update rollback 
+  * autoscalingrollingupdate - can update instances in the ASG
+  * autoscalingreplacingupdate - update the entire ASG at once
+  * Drift detection is via config 
 
 * CloudFront
 	* Configure log files to contain every request info
@@ -78,6 +103,8 @@ Score:
 * CloudTrail
 	* Track API activities made by console, CLI, CF, etc. 
 	* Can track federated users 
+	* Management events - controlplane events - default. For events on resources in account
+	* Data events - off by default - events performed on a resource 
 
 * CloudWatch
   * Can have two config files - different file names
@@ -95,6 +122,7 @@ Score:
     * CPUUtilization
     * Custom: StatsD for L/W, CollectD for L
     * Custom metrics via CLI or API
+    * Insight: search or analyze logs 
     * Alarm
 	    * automatic actions on EC2
 	* Agent
@@ -110,12 +138,22 @@ Score:
 * Config
 	* keeps track of configuration and relationships to other resources and evaluates for compliance
 	* Auto Remediation to fix things that aren't right
+	* Can't enforce that people don't do non-compliant things 
 	* discover existing AWS resources, export a complete inventory of your AWS resources with all configuration details, and determine how a resource was configured at any point in time.
+	* two triggers: configuration and period triggers to run things on a schedule
+	* Things can remain on console for a bit after deleting
+
+* Control Tower
+	* AWS Control Tower offers a straightforward way to set up and govern an AWS multi-account environment, following prescriptive best practices.
+	* Extends AWS Organizations
 
 * EBS
 	* Consistency check for impaired storage
 	* Expand with elastic volumes
 	* Increasing size gives more I/O credits for performance
+	* Initialize/Pre-warm it to make sure it works right away
+	* Data Lifecycle Manager for snapshots 
+	* Volumeread/writebyes (not diskread/write)
 
 * EC2
   * DisableApiTermination: stops termination from API, CLI, UI
@@ -128,6 +166,15 @@ Score:
   * Dedicated instances are normal instances but hardware separated per customer, dedicated host gives full host
   * Instance Profile - gives IAM role information to instance
   * EC2Rescue - help resolve windows OS level issues 
+  * Traffic mirroring: ensure that target MTU is >= source MTU
+  * Most metrics that aren't just based on status checks or CPU utilization require CW agent
+
+* EFS
+	* Access points - help manage application access to shared data. Enforce identity, user groups, etc. Can be combined with IAM 
+	* Pay for what you use
+	* many AZ
+	* Burst throughput - scales as efs size scaled
+	* Provisioned throughput - scales independently
 
 * ELB
   * 503 if no registered targets
@@ -135,20 +182,28 @@ Score:
   * Cloudtrail logs capture all API calls, including IP, who/when, etc.
   * NLB is best for high throughput
   * ALB Access logs include IP address, latencies, paths, responses
+  * Can't disable AZs after creation
 
 * Encryption
 	* SSE-C - encryption in AWS by customer key 
 	* SSE-S3 - encryption with S3 managed keys, everything keys a different key that is encrypted with the master key
 	* SSE-CMK - like S3 but additional logging and permissions
+	* AES256 in policy = sses3
+	* ACM - SSL certs only for HTTPS
+	* AWS managed CMK - auto rotation, can't change
+	* Customer managed CMK - can enable rotation
 
 * EventBridge
-	* Something happends, send trigger to something else (Lambda, SNS, etc)
+	* Something happens, send trigger to something else (Lambda, SNS, etc)
 		  * Sending to Kinesis - requires IAM role
+		  * Send to SNS
 		  * Sending to anything else - configure resource-based policy 
 
 * Gateways
 	* Volume - iSCSI
 	* Egress Only Internet Gateway - IPv6
+	* FSx Windows File Server - NTFS and SMB EFS
+	* Cached vs stored volume gateway - only keep cached files local vs keeping all files local 
 
 * IAM
   * Resources must be globally unique named
@@ -159,13 +214,18 @@ Score:
 	  * Any explicit deny overrides any allow
 	  * Password policies to force changes
 	  * Access keys can't be expired via policy 
+	  * Users can be in multiple groups
+	  * Groups can't be in other groups
 
 * Inspector
 	* security assessment service
 	* check security state 
+	* Assessment templates can do custom checks 
+	* Agent has to be installed on instances 
 
 * Lambda
   * Not self-invoking
+  * default in a secure VPC, you can put into other othes
 
 * Trusted Advisor
   * monitor against service limints
@@ -177,11 +237,17 @@ Score:
 	* Delete marker - versioned object marked deleted, not actually gone
 	* Replication Time Control - notice when replication fails
 	* Versions can have different retention periods
+	* Upload to another accounts bucket and you still retain rights unless you delegate them 
 	* Storage options:
 		* have to be in for 30 days before going to IA
+	* Access points - manage access at scale for using shared datasets
 
 * Secrets Manager
-	* Supports automatic rotation
+	* Supports automatic rotation for RDS, Redshift, DocumentDB
+
+* Service Catalog
+	* Create and manage catalogs of approved services . VMs, DBs, etc
+	* End users can deploy approved things
 
 * Site to site
 	* direct connect - physical
@@ -203,16 +269,12 @@ Score:
 	* Read replicas are asynchronous on change to dB, Multi-AZ is synchronous
 	* Upgrade - snapshot existing and create new then upgrade and test 
 	* Only ever one writable node
-	* 
+	* Dynamo streams and Global table for HA
+	* point in time recovery to undo write/delete
+	* Redis shard = data partition
 
 * Route 53
 	* Alias - special record to map an apex to an ELB DNS (only one since you can't CNAME the apex)
-
-* AWS Redshift
-	* Data warehouse in PQL to analyze data you put into it
-
-* Accidental deleting
-  * AMI - can't be recovered, only remade
 
 * Volumes
 	* EBS
@@ -232,3 +294,15 @@ Score:
 * WAF
 	* Only in front of CF, ALB, API Gateway
 	* Manage rate limits 
+
+* See this? Think that (should have started this earlier). There might be a lot of nuance to services, but there's also some big points and relationships they want to convey. 
+	* Organizations - SCP
+	* CF & Region - AMI mismatch
+	* Subnet Access - ACL
+	* Audit - artifact
+	* DNS to LB/Cloudfront - Alias
+	* Almost anything and need to encrypt what exists - recreate
+	* Customer secure access - signed url
+	* patch performance issues - 10% only
+	* An answer that uses the services capabilites - probably that (vs a chain of others). 
+	* Anything with private subnet - NAT gateway
